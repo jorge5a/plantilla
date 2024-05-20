@@ -1,0 +1,133 @@
+[
+    {
+        "id": "d28175c87d0af8df",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f0412eac980f20fb",
+        "type": "mqtt in",
+        "z": "d28175c87d0af8df",
+        "name": "",
+        "topic": "65E5BA81",
+        "qos": "0",
+        "datatype": "utf8",
+        "broker": "67a825f3000870a8",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "c3b527636750c701"
+            ]
+        ]
+    },
+    {
+        "id": "be81a5f71b35b1f6",
+        "type": "debug",
+        "z": "d28175c87d0af8df",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 700,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "f7275434737f63df",
+        "type": "influxdb out",
+        "z": "d28175c87d0af8df",
+        "influxdb": "503f73a74399a005",
+        "name": "influxcloud",
+        "measurement": "papa4",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "UNIR",
+        "x": 830,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "c3b527636750c701",
+        "type": "function",
+        "z": "d28175c87d0af8df",
+        "name": "function 1",
+        "func": "var temp=JSON.parse(msg.payload);\nvar topic=msg.topic;\nmsg.payload=[       \n        {\n            \"ACCx\":temp[0],\n            \"ACCy\": temp[1],\n            \"ACCz\": temp[2],\n            \"GYROx\": temp[3],\n            \"GYROy\": temp[4],\n            \"GYROz\": temp[5],\n            \"PRESS\": temp[5]\n        },\n         {tag1:topic}\n    \n]\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 260,
+        "wires": [
+            [
+                "f7275434737f63df",
+                "be81a5f71b35b1f6"
+            ]
+        ]
+    },
+    {
+        "id": "67a825f3000870a8",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "9893601f6ecd4aab926ba5df80ad9f72.s2.eu.hivemq.cloud",
+        "port": "8883",
+        "tls": "",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": true,
+        "protocolVersion": "3",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "503f73a74399a005",
+        "type": "influxdb",
+        "hostname": "https://us-east-1-1.aws.cloud2.influxdata.com",
+        "port": "8086",
+        "protocol": "http",
+        "database": "UNIR",
+        "name": "influxcloud",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://us-east-1-1.aws.cloud2.influxdata.com",
+        "timeout": "10",
+        "rejectUnauthorized": true
+    }
+]
