@@ -1,0 +1,129 @@
+[
+    {
+        "id": "67e8698e7840043e",
+        "type": "tab",
+        "label": "Mecanoplantilla",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "88ca8cbf761051fe",
+        "type": "mqtt in",
+        "z": "67e8698e7840043e",
+        "name": "",
+        "topic": "#",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "c1270d6929a90720",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 502,
+        "y": 240,
+        "wires": [
+            [
+                "c3e19f21161a3a8c"
+            ]
+        ]
+    },
+    {
+        "id": "672abcefc3030b0b",
+        "type": "debug",
+        "z": "67e8698e7840043e",
+        "name": "debug 18",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 757,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "0d2e037af0aee0f9",
+        "type": "influxdb out",
+        "z": "67e8698e7840043e",
+        "influxdb": "aeee32a449c2fa50",
+        "name": "",
+        "measurement": "plantilla",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "s",
+        "retentionPolicyV18Flux": "",
+        "org": "dabb471436930e4e",
+        "bucket": "MecanoPlantilla",
+        "x": 1122,
+        "y": 270,
+        "wires": []
+    },
+    {
+        "id": "c3e19f21161a3a8c",
+        "type": "function",
+        "z": "67e8698e7840043e",
+        "name": "Logs",
+        "func": "\n\nconst data = msg.payload;\nlet output_payload = [{\n    \"max\": parseFloat(data[6]),\n            \"accX\": parseFloat(data[0]),\n                \"accY\": parseFloat(data[1]),\n                    \"accZ\": parseFloat(data[2]),\n                        \"gyroX\": parseFloat( data[3]),\n                            \"gyroY\": parseFloat(data[4]),\n                                \"gyroZ\": parseFloat(data[5]),\n                                   \n    \n    }, { \n        \"id\": \"test1\",\n    }\n]\n\n\n    return {\n        payload: output_payload\n\n    }\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 676,
+        "y": 394,
+        "wires": [
+            [
+                "0d2e037af0aee0f9",
+                "672abcefc3030b0b"
+            ]
+        ]
+    },
+    {
+        "id": "c1270d6929a90720",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "aeee32a449c2fa50",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://us-east-1-1.aws.cloud2.influxdata.com",
+        "rejectUnauthorized": false
+    }
+]
